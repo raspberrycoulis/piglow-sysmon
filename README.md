@@ -12,11 +12,11 @@ Instructions for building and installing WiringPi are at http://wiringpi.com/dow
 
 piglow-sysmon can be downloaded using git
 
-	git clone https://github.com/chrisgjohnson/piglow-sysmon.git
+	git clone git://github.com/raspberrycoulis/piglow-sysmon.git
 
 or by getting the zip file at
 
-    https://github.com/chrisgjohnson/piglow-sysmon/archive/master.zip
+    https://github.com/raspberrycoulis/piglow-sysmon/archive/master.zip
 
 To compile, simply run
 
