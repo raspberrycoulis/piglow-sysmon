@@ -7,8 +7,16 @@ piglow-sysmon is written in C++ and is distributed under the GNU General Public 
 
 Installation
 ------------
+I2C needs to be enabled via `sudo raspi-config` and enabling via `Interfacing options`.
+
 piglow-sysmon requires the WiringPi library (http://wiringpi.com/)
-Instructions for building and installing WiringPi are at http://wiringpi.com/download-and-install/
+Instructions for building and installing WiringPi are at http://wiringpi.com/download-and-install/ or you can install via:
+
+````
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+````
 
 piglow-sysmon can be downloaded using git
 
@@ -67,3 +75,37 @@ The full command-line parameters are:
 		   -? -h
 		        Show this help screen
 
+## Running as a Service
+To run the script on boot, do:
+
+````
+sudo nano /lib/systemd/system/piglow-sysmon.service
+````
+
+Then paste or type the following:
+
+````
+[Unit]
+Description=PiGlow System Monitor Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/home/pi/piglow-sysmon/piglow-sysmon -b 100 -n eth0 -d 250 -c > /home/pi/piglow-sysmon/piglow-sysmon.log 2>&1
+Restart=always
+RestartSec=5
+
+
+[Install]
+WantedBy=multi-user.target
+````
+
+Change permissions and enable script:
+
+````
+sudo chmod 644 /lib/systemd/system/piglow-sysmon.service
+sudo systemctl daemon-reload
+sudo systemctl enable piglow-sysmon.service
+````
+
+Then either `sudo reboot` or run `sudo systemctl start piglow-sysmon.service`.
